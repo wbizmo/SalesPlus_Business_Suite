@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SalesPlus POS - Loading</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #008cff;   /* Bright blue */
+      --secondary-color: #40a9ff; /* Softer blue for SVG accent */
+      --accent-color: #0099ff;    /* Optional for hover/focus */
+      --bg-light: #F8FAFC;
+      --bg-dark: #1F2937;
+      --text-light: #F9FAFB;
+      --text-dark: #1F2937;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    /* Logo container */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      font-size: 2rem;
+      color: var(--primary-color);
+      animation: fadeIn 1.2s ease-in-out forwards;
+    }
+    .logo-container svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      color: var(--secondary-color);
+      flex-shrink: 0;
+    }
+
+    /* Spinner */
+    .spinner {
+      margin-top: 28px;
+      width: 32px;
+      height: 32px;
+      border: 2px solid rgba(0, 140, 255, 0.15); /* soft blue faint border */
+      border-top: 2px solid var(--primary-color); /* top accent */
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { 
+      to { transform: rotate(360deg); } 
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo -->
+  <div class="logo-container">
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         viewBox="0 0 24 24" 
+         fill="none" stroke="currentColor" 
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 11 12 14 22 4"></polyline>
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+    </svg>
+    <span>SalesPlus Business Suite</span>
+  </div>
+
+  <!-- Spinner -->
+  <div class="spinner"></div>
+</body>
+</html>

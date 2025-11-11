@@ -1,0 +1,45 @@
+name: Build SalesPlus POS - Windows
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ secrets.SP_BIZ_SECRET }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Auto bump version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          npm version patch --no-git-tag-version
+          git add package.json package-lock.json
+          git commit -m "ci: bump version [skip ci]" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.SP_BIZ_SECRET }}@github.com/${{ github.repository }}.git HEAD:main || echo "Skipping push"
+
+
+      - name: Generate icons (from icon.png)
+        run: npm run generate-icons
+
+      - name: Build Windows installer
+        run: npm run dist
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SalesPlus-POS-Installer
+          path: dist/*.exe

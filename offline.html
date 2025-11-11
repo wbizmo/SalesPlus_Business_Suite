@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SalesPlus POS - Offline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #008cff; /* Bright blue for main brand */
+      --secondary-color: #40a9ff; /* Softer blue highlight */
+      --accent-color: #0099ff; /* Accent for hover/focus */
+      --bg-light: #F8FAFC;
+      --bg-dark: #1F2937;
+      --text-light: #F9FAFB;
+      --text-dark: #1F2937;
+    }
+
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    .card {
+      width: 420px;
+      padding: 28px;
+      background: #fff;
+      color: var(--text-dark);
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      font-size: 1.6rem;
+      color: var(--primary-color);
+      margin-bottom: 16px;
+    }
+    .logo svg {
+      width: 1.8rem;
+      height: 1.8rem;
+      color: var(--secondary-color);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    p {
+      margin: 0 0 18px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #444;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 0;
+      background: var(--primary-color);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    button:hover { background: #4C1D95; }
+
+    .small {
+      color: #6c7280;
+      font-size: 12px;
+      margin-top: 14px;
+      font-weight: 400;
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .popup.active { visibility: visible; opacity: 1; }
+
+    .popup-box {
+      background: #fff;
+      color: var(--text-dark);
+      padding: 20px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      animation: fadeIn 0.3s ease;
+    }
+    .popup-box h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    .popup-box p {
+      font-size: 13px;
+      font-weight: 400;
+      margin: 0 0 14px;
+      color: #444;
+    }
+    .popup-box button {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .popup-box button:hover { background: #4C1D95; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           viewBox="0 0 24 24" 
+           fill="none" stroke="currentColor" 
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 11 12 14 22 4"></polyline>
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+      </svg>
+      <span>Sales +</span>
+    </div>
+    <h1>No Internet Connection</h1>
+    <p>We couldn’t reach our servers. Please check your connection.</p>
+    <div>
+      <button id="retry">Retry</button>
+    </div>
+    <div class="small">
+      The app will reload when your connection is restored.
+    </div>
+  </div>
+
+  <div id="popup" class="popup">
+    <div class="popup-box">
+      <h2 id="popup-title">Error</h2>
+      <p id="popup-message">Something went wrong.</p>
+      <button id="popup-close">OK</button>
+    </div>
+  </div>
+
+  <script>
+    const retry = document.getElementById('retry');
+    const popup = document.getElementById('popup');
+    const popupTitle = document.getElementById('popup-title');
+    const popupMessage = document.getElementById('popup-message');
+    const popupClose = document.getElementById('popup-close');
+
+    function showPopup(title, message) {
+      popupTitle.textContent = title;
+      popupMessage.textContent = message;
+      popup.classList.add('active');
+    }
+
+    popupClose.addEventListener('click', () => {
+      popup.classList.remove('active');
+    });
+
+    retry.addEventListener('click', async () => {
+      try {
+        const ok = await window.electronAPI.forceGoLive();
+        if (!ok) {
+          showPopup('Still Offline', 'Still offline — try again shortly.');
+        }
+      } catch (e) {
+        showPopup('Connection Error', 'Error checking connection. Try again.');
+      }
+    });
+  </script>
+</body>
+</html>

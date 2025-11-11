@@ -1,0 +1,41 @@
+{
+  "name": "salesplus-business-suite",
+  "version": "0.4.0",
+  "description": "SalesPlus is a powerful self-hosted business suite with a full range of features including POS, inventory, accounting, CRM, and HR management. It's designed to simplify your operations and give you complete control.",
+  "author": "Zivora Logic Technologies <zivoratechnologies@gmail.com>",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "generate-icons": "node scripts/generate-icons.js",
+    "dist": "npm run generate-icons && electron-builder --windows nsis"
+  },
+  "dependencies": {
+    "is-online": "^9.0.0",
+    "electron-updater": "^6.1.0"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "^24.0.0",
+    "png-to-ico": "^2.1.4"
+  },
+  "build": {
+    "appId": "com.zivora.salespluspos",
+    "productName": "SalesPlus Business Suite",
+    "artifactName": "SalesPlus-Setup-${version}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SalesPlus Business"
+    }
+  }
+}
