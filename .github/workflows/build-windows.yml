@@ -9,7 +9,7 @@ jobs:
   build-windows:
     runs-on: windows-latest
     env:
-      GH_TOKEN: ${{ secrets.SP_BIZ_SECRET }}
+      GH_TOKEN: ${{ secrets.SP_SECRET }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
