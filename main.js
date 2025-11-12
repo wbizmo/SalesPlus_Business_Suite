@@ -4,7 +4,7 @@ const isOnline = require('is-online');
 const packageJson = require('./package.json');
 
 let mainWindow, splash, offlineOverlay;
-const mainURL = 'https://cluster64.sp-server.online/public/';
+const mainURL = 'https://cluster64.sp-server.online/public/login';
 let lastTriedURL = mainURL;
 let lastOfflineState = false;
 let networkStableCount = 0; // helps filter out brief fluctuations
