@@ -1,6 +1,6 @@
 {
   "name": "salesplus-business-suite",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "SalesPlus is a powerful self-hosted business suite with a full range of features including POS, inventory, accounting, CRM, and HR management. It's designed to simplify your operations and give you complete control.",
   "author": "Zivora Logic Technologies <zivoratechnologies@gmail.com>",
   "main": "main.js",
